@@ -1,0 +1,11 @@
+---
+- name: "Docker Image/Build and Image/Push"
+  hosts: hp-server
+  become: true
+  gather_facts: yes
+
+  tasks:
+
+    - name: "Show OS Version"
+      debug:
+        var: ansible_distribution + " " + ansible_distribution_version
