@@ -9,3 +9,6 @@
     - name: "Show OS Version"
       debug:
         var: ansible_distribution + " " + ansible_distribution_version
+
+
+# ansible_host: 192....
