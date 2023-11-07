@@ -1,6 +1,6 @@
 ---
 - name: "Docker Image/Build and Image/Push"
-  hosts: hp-server
+  hosts: all
   become: true
   gather_facts: yes
 
