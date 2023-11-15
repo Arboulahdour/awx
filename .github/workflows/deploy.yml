@@ -1,0 +1,49 @@
+name: Deploy to DigitalOcean
+
+on:
+  workflow_dispatch:
+    inputs:
+      services:
+        description: 'Select Docker Compose services to build'
+        required: true
+        type: choice
+        options:
+          - 'firebird-server'
+          - 'servicebroker'
+          - 'webcms'
+          - 'go-api'
+          - 'all'
+        # Add more services as needed
+        default: 'all'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+    
+      - name: Deploy Docker Compose services
+        run: |
+            # Access the input parameter value
+            SERVICES="${{ github.event.inputs.services }}"
+    
+            # Validate if services are provided
+            if [ -z "$SERVICES" ]; then
+              echo "No services provided. Exiting."
+              exit 1
+            fi
+
+            # Validate if services are provided
+            if [ "$SERVICES" == "all" ]; then
+              echo "build all services"
+              echo $SERVICES
+            fi
+    
+            # Convert the comma-separated string to an array
+            IFS=',' read -ra SERVICE_ARRAY <<< "$SERVICES"
+    
+            # Build the specified Docker Compose services
+            for SERVICE in "${SERVICE_ARRAY[@]}"; do
+              echo $SERVICE
+            done
