@@ -3,18 +3,26 @@ name: Deploy to DigitalOcean
 on:
   workflow_dispatch:
     inputs:
-      services:
-        description: 'Select Docker Compose services to build'
+      firebird-server:
+        type: 'boolean'
+        description: 'firebird-server'
         required: true
-        type: choice
-        options:
-          - 'firebird-server'
-          - 'servicebroker'
-          - 'webcms'
-          - 'go-api'
-          - 'all'
-        # Add more services as needed
-        default: 'all'
+        default: true
+      servicebroker:
+        type: 'boolean'
+        description: 'servicebroker'
+        required: true
+        default: true
+      webcms:
+        type: 'boolean'
+        description: 'webcms'
+        required: true
+        default: true
+      go-api:
+        type: 'boolean'
+        description: 'go-api'
+        required: true
+        default: true
 
 jobs:
   deploy:
@@ -25,25 +33,30 @@ jobs:
     
       - name: Deploy Docker Compose services
         run: |
-            # Access the input parameter value
-            SERVICES="${{ github.event.inputs.services }}"
-    
-            # Validate if services are provided
-            if [ -z "$SERVICES" ]; then
-              echo "No services provided. Exiting."
-              exit 1
+
+            SERVICES=""
+
+            # Check if firebird-server service should be built
+            if [ "${{ github.event.inputs.firebird-server }}" == "true" ]; then
+               SERVICES="$SERVICE" + "firebird"
             fi
 
-            # Validate if services are provided
-            if [ "$SERVICES" == "all" ]; then
-              echo "build all services"
-              echo $SERVICES
+            # Check if servicebroker service should be built
+            if [ "${{ github.event.inputs.servicebroker }}" == "true" ]; then
+               SERVICES="$SERVICE" + "servicebroker"
             fi
+
+            # Check if webcms service should be built
+            if [ "${{ github.event.inputs.webcms }}" == "true" ]; then
+               SERVICES="$SERVICE" + "webcms"
+            fi
+
+            # Check if go-api service should be built
+            if [ "${{ github.event.inputs.go-api }}" == "true" ]; then
+               SERVICES="$SERVICE" + "go-api"
+            fi
+
+            # List of service should be built
+            echo $SERVICE
     
-            # Convert the comma-separated string to an array
-            IFS=',' read -ra SERVICE_ARRAY <<< "$SERVICES"
-    
-            # Build the specified Docker Compose services
-            for SERVICE in "${SERVICE_ARRAY[@]}"; do
-              echo $SERVICE
-            done
+            
