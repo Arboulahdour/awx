@@ -3,6 +3,15 @@ name: Deploy to DigitalOcean
 on:
   workflow_dispatch:
     inputs:
+      environment:
+        type: 'choice'
+        description: 'Specify the target environment'
+        required: false
+        options:
+            - 'dev'
+            - 'stage'
+            - 'prod'
+        default: 'dev'
       firebird-server:
         type: 'boolean'
         description: 'firebird-server'
@@ -23,7 +32,7 @@ on:
         description: 'go-api'
         required: true
         default: true
-
+      
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -57,6 +66,6 @@ jobs:
             fi
 
             # List of service should be built
-            echo $SERVICE
+            echo $SERVICES
     
             
