@@ -47,22 +47,22 @@ jobs:
 
             # Check if firebird-server service should be built
             if [ "${{ github.event.inputs.firebird-server }}" == "true" ]; then
-               SERVICES="$SERVICE firebird"
+               SERVICES="$SERVICES firebird"
             fi
 
             # Check if servicebroker service should be built
             if [ "${{ github.event.inputs.servicebroker }}" == "true" ]; then
-               SERVICES="$SERVICE servicebroker"
+               SERVICES="$SERVICES servicebroker"
             fi
 
             # Check if webcms service should be built
             if [ "${{ github.event.inputs.webcms }}" == "true" ]; then
-               SERVICES="$SERVICE webcms"
+               SERVICES="$SERVICES webcms"
             fi
 
             # Check if go-api service should be built
             if [ "${{ github.event.inputs.go-api }}" == "true" ]; then
-               SERVICES="$SERVICE go-api"
+               SERVICES="$SERVICES go-api"
             fi
 
             # List of service should be built
