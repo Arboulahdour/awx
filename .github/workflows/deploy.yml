@@ -79,8 +79,7 @@ jobs:
 
             echo $SERVICES
             echo $GITHUB_ENV
-            #echo $GITHUB_ENV | grep SERVICES
-            #env
+            env | grep SERVICES
             # ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST_IP }} \
             #   "cd ${{ secrets.WORK_DIR }}" \
             #   "&& git checkout main" \
