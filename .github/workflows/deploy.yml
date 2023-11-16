@@ -65,7 +65,7 @@ jobs:
 
             # List of service should be built
             
-            echo 'SERVICES=$SERVICES' >> $GITHUB_ENV
+            echo "SERVICES='$SERVICES'" >> $GITHUB_ENV
 
       # - name: install ssh keys
       #   run: |
