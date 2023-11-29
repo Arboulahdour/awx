@@ -9,6 +9,7 @@ on:
         required: false
         options:
             - 'dev'
+            - 'qa'
             - 'stage'
             - 'prod'
         default: 'dev'
